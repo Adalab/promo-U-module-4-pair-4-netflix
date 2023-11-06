@@ -13,7 +13,7 @@ const serverPort = 4000;
 async function getConnection() {
   const connection = await mysql.createConnection({
     host: 'serverPort',
-    user: '',
+    user: 'root',
     password: '',
     database: 'netflix',
   });
@@ -22,23 +22,49 @@ async function getConnection() {
   return connection;
 }
 
-server.listen(serverPort, () => {
-  console.log(`Server listening at http://localhost:${serverPort}`);
+//iniciar el servidor
+const port = 4000;
+server.listen(port, () => {
+  console.log(`Servidor iniciado en http://localhost:${port}`);
 });
 
-
-// const staticServerPathWeb = './src/public-react';
-// server.use(express.static(staticServerPathWeb));
-
-server.get('/movies', async (req, res) =>{
-    try {
-      const conn = await getConnection();
-      const queryMovies = 'SELECT * FROM movies';
-      const [results] = await conn.query(queryMovies);
-      conn.end();
-      res.json(results);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error al obtener los datos de las peliculas.' });
-    }
+//endpoint para todas las películas
+server.get('/movies', async (req, res) => {
+  //1. Obtener los datos de la base de datos
+  const conn = await getConnection();
+  //2. Consulta que quiero a la bd: obtener todas las alumnas
+  const queryMovies = 'SELECT * FROM movies';
+  //3. Ejecutar la consulta
+  const [results, fields] = await conn.query(queryMovies);
+  console.log(fields);
+  console.log(results);
+  //4.Cerrar la conexión
+  conn.end();
+  res.json({
+    success: true,
+    movies: results,
   });
+});
+
+server.get('/movies/genre', async (req, res) => {
+  //1. Obtener los datos de la base de datos
+  const conn = await getConnection();
+  //2. Consulta que quiero a la bd: obtener todas las alumnas
+  const queryMoviesByGenre = 'SELECT genre FROM movies';
+  //3. Ejecutar la consulta
+  const [results, fields] = await conn.query(queryMoviesByGenre);
+  console.log(fields);
+  console.log(results);
+  //4.Cerrar la conexión
+  conn.end();
+  res.json({
+    success: true,
+    movies: results,
+  });
+});
+
+const staticServerPath = 'web/dist';
+server.use(express.static(staticServerPath));
+
+const pathImgServer = 'src/public-movies-images/';
+server.use(express.static(pathImgServer));
