@@ -1,17 +1,32 @@
 {
-  "name": "adalab-netflix",
+  "name": "promo-u-module-4-pair-10-netflix",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js",
-    "publish-react": "cd web && npm run build && cd .. && rm -rf ./src/public-react && mv ./web/build ./src/public-react"
+    "dev": "nodemon src/index.js"
   },
-  "author": "adalab",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adalab/promo-U-module-4-pair-4-netflix.git"
+  },
+  "keywords": [],
+  "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adalab/promo-U-module-4-pair-4-netflix/issues"
+  },
+  "homepage": "https://github.com/Adalab/promo-U-module-4-pair-4-netflix#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.3"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.3"
   }
 }
